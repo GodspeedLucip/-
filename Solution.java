@@ -53,6 +53,9 @@ public class Solution {
         }
         return sum;
     }
+    
+    //找出递增数组中目标数字的插入位置
+    //leetcode题目号：
     public static int searchInsert(int[] nums, int target) {
         int low = 0;
         int high = nums.length-1;
@@ -85,6 +88,9 @@ public class Solution {
         return high+1;
         //判定条件是high<low时就退出。
     }
+    
+    //找出数组中目标值出现的左右位置
+    //leetcode题号：
     public static int[] searchRange(int[]nums,int target){
         int low = 0;
         int high = nums.length-1;
@@ -147,6 +153,9 @@ public class Solution {
         }
         return (int) high;
     }
+    
+    //验证是不是完美平方数
+    //leetcode题目号：
     public static boolean isPerfectSquare(int num) {
         if(num==0||num==1){
             return true;
