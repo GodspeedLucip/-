@@ -1,0 +1,26 @@
+public class Solution {
+    public static void main(String[] args) {
+        ListNode head = new ListNode();
+        head.val=-1;
+        head.next = null;
+        for (int i = 0; i < 7; i++) {
+            ListNode node = new ListNode(i,null);
+            node.next = head.next;
+            head.next = node;
+        }
+        head = reverseList01(head);
+        head.show(head);
+    }
+    public static ListNode reverseList01(ListNode head) {
+        //使用迭代法反转链表
+        ListNode right = head;
+        ListNode left = null;
+        while(right!=null){
+            ListNode temp = right.next;
+            right.next=left;
+            left = right;
+            right = temp;
+        }
+        return left;
+    }
+}
