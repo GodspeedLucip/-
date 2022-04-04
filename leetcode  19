@@ -1,0 +1,70 @@
+public class Solution {
+    public static void main(String[] args) {
+        ListNode head = new ListNode();
+        head.val=1;
+        for (int i = 1; i < 6; i++) {
+            ListNode node = new ListNode(i,null);
+            node.next = head.next;
+            head.next = node;
+        }
+        Show.show(head);
+        head = removeNthFromEnd01(head,6);
+        Show.show(head);
+//        ListNode head = null;
+    }
+    
+    public static ListNode removeNthFromEnd(ListNode head, int n) {
+        //leetcode 19 https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/
+        //思路一：先求出总长度，就方便求倒数几位
+        if(head==null){
+            return head;
+        }
+        ListNode p = head;
+        int len = 1;
+        while(p.next!=null){
+            p = p.next;
+            len++;
+        }
+        int nth = len - n+1;
+//        System.out.println(nth+""+len);
+        if(nth==0||nth==1){
+            head = head.next;
+            return head;
+        }
+        int i = 1;
+        ListNode r = head;
+        while(r!=null&&i<nth-1){
+            r = r.next;
+            i++;
+        }
+        if(r.next!=null){
+            r.next = r.next.next;
+        }
+        else{
+            r=null;
+        }
+        return head;
+    }
+    
+    public static ListNode removeNthFromEnd01(ListNode head, int n){
+        //思路二：两个指针，fast指针比slow指针多走n个位置，这样，当fast到链尾时slow就是倒数第n个数据
+        ListNode dummyNode = new ListNode();
+        dummyNode.next = head;
+        ListNode fast=head;
+        ListNode slow=dummyNode;
+        for (int i = 0; i < n; i++) {
+            fast = fast.next;
+        }
+        while(fast!=null){
+            fast = fast.next;
+            slow = slow.next;
+        }
+        if(slow.next!=null){
+            slow.next = slow.next.next;
+        }
+        else{
+            slow = null;
+        }
+        return dummyNode.next;
+    }
+}
