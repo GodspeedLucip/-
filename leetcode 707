@@ -1,0 +1,55 @@
+
+        if(index==0){
+            addAtHead(val);
+            return;
+        }
+        while(p!=null&&i<index-1){
+            p = p.next;
+            i++;
+        }
+        if(p!=null){
+            node.next = p.next;
+            p.next = node;
+        }
+    }
+
+    public void deleteAtIndex(int index) {
+        ListNode dummyNode = new ListNode();
+        dummyNode.next = head;
+        ListNode p = dummyNode;
+        int i = 0;
+        if(index==0){
+            head = head.next;
+        }
+        while(p.next!=null&&i<index){
+            p = p.next;
+            i++;
+        }
+        if(p.next!=null){
+            p.next = p.next.next;
+        }
+    }
+
+    public void show(ListNode list){
+        ListNode p = list;
+        while(p!=null){
+            System.out.print(p.val+" ");
+            p = p.next;
+        }
+        System.out.println();
+    }
+
+    class ListNode {
+        public int val;
+        public ListNode next;
+        public ListNode() {
+        }
+        ListNode(int val) {
+            this.val = val;
+        }
+        public ListNode(int val, ListNode next) {
+            this.val = val;
+            this.next = next;
+        }
+    }
+}
