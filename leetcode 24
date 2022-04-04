@@ -1,0 +1,51 @@
+public class Solution {
+    public static void main(String[] args) {
+        ListNode head = new ListNode();
+        head.val=1;
+        head.next = null;
+        for (int i = 1; i < 6; i++) {
+            ListNode node = new ListNode(i,null);
+            node.next = head.next;
+            head.next = node;
+        }
+//        ListNode head = null;
+        Show.show(head);
+        head = swapPairs(head);
+        Show.show(head);
+    }
+    public static ListNode swapPairs(ListNode head) {
+        //leetcode 24  https://leetcode-cn.com/problems/swap-nodes-in-pairs/
+        if(head==null||head.next==null){
+            return head;
+        }
+
+        ListNode front,behind;
+        front = head.next;
+        behind = head;
+        int i=1;
+        ListNode listHead = new ListNode();
+        ListNode record = null;
+        while(front!=null){
+            if(i==1){
+                listHead = front;
+                behind.next = front.next;
+                front.next = behind;
+            }
+            else{
+                record.next = front;
+                behind.next = front.next;
+                front.next = behind;
+            }
+            record = behind;
+            if(behind.next!=null){
+                front = behind.next.next;
+            }
+            else{
+                front = null;
+            }
+            behind = behind.next;
+            i++;
+        }
+        return listHead;
+    }
+}
