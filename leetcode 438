@@ -1,0 +1,53 @@
+public static List<Integer> findAnagrams(String s, String p) {
+        //leetcode 438 https://leetcode-cn.com/problems/find-all-anagrams-in-a-string/
+        int len = p.length();
+        List<Integer>list = new ArrayList<>();
+        char[]pArray = p.toCharArray();
+        Arrays.sort(pArray);
+        String pSort = new String(pArray);
+        System.out.println(p.length());
+        for (int i = 0; i < s.length()-len+1; i++) {
+            String tar = s.substring(i,i+len);
+            char[]tarArray = tar.toCharArray();
+            Arrays.sort(tarArray);
+            String tarSort = new String(tarArray);
+            if(tarSort.equals(pSort)){
+                list.add(i);
+            }
+        }
+        return list;
+    }
+    
+    public static List<Integer> findAnagrams01(String s, String p) {
+        //leetcode 438 https://leetcode-cn.com/problems/find-all-anagrams-in-a-string/
+        //明显要快
+        List<Integer>list = new ArrayList<>();
+        int len = p.length();
+        int[]pArray = new int[26];
+        int[]tarArray = null;
+        for (int i = 0; i < p.length(); i++) {
+            pArray[p.charAt(i)-'a']++;
+        }
+        System.out.println(p);
+        for (int i = 0; i < s.length()-len+1; i++) {
+            String tar = s.substring(i,i+len);
+//            System.out.println(tar);
+            tarArray = new int[26];
+            for (int j = 0; j < tar.length(); j++) {
+                int pos = tar.charAt(j)-'a';
+                tarArray[pos]++;
+            }
+            boolean flag = true;
+            for (int j = 0; j < 26; j++) {
+//                System.out.print(tarArray[j]+" "+pArray[j]+" ");
+                if(pArray[j]!=tarArray[j]){
+                    flag = false;
+                }
+            }
+            System.out.println(flag);
+            if (flag){
+                list.add(i);
+            }
+        }
+        return list;
+    }
