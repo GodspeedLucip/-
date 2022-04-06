@@ -1,0 +1,78 @@
+    public static List<List<String>> groupAnagrams(String[] strs) {
+        //leetcode 49  https://leetcode-cn.com/problems/group-anagrams/
+        //双重for直接超时
+        List<List<String>>list = new ArrayList<>();
+        List<String>str = null;
+        if(strs==null||strs.length==0){
+            return null;
+        }
+        if(strs.length==1){
+            str = new LinkedList<>();
+            str.add(strs[0]);
+            list.add(str);
+            return list;
+        }
+
+        for (int i = 0; i < strs.length; i++) {
+            if(strs[i].equals("0")){
+                continue;
+            }
+            str = new ArrayList<>();
+            str.add(strs[i]);
+            for (int j = i+1; j < strs.length; j++) {
+                if(strs[j].equals("0")){
+                    continue;
+                }
+                boolean flat = false;
+                int[]count = new int[26];
+                for (int k = 0; k < strs[i].length(); k++) {
+                    int pos = strs[i].charAt(k)-'a';
+                    count[pos]++;
+                }
+                for (int k = 0; k < strs[j].length(); k++) {
+                    int pos = strs[j].charAt(k)-'a';
+                    count[pos]--;
+                }
+                flat = true;
+                for (int k = 0; k < 26; k++) {
+                    if(count[k]!=0){
+                        flat = false;
+                    }
+                }
+                if(flat){
+                    str.add(strs[j]);
+                    strs[j]="0";
+                }
+            }
+            strs[i] = "0";
+            list.add(str);
+        }
+        return list;
+    }
+    public static List<List<String>> groupAnagrams01(String[] strs){
+        //思路：对每个字符进行排序，得到的值作为哈希表的键，满足条件的字符串的键肯定相同。
+        List<List<String>> list = new ArrayList<>();
+        List<String> str = null;
+        Map<String,List<String>> map = new HashMap<>();
+        if(strs.length==0){
+            str = new ArrayList<>();
+            list.add(str);
+            return list;
+        }
+        for (String s:strs){
+            char[]arr = s.toCharArray();
+            Arrays.sort(arr);
+            String tar = new String(arr);
+            //注意这里不可以用toString，否则返回的是地址
+//            System.out.println(tar);
+            if(!map.containsKey(tar)){
+                str = new ArrayList<>();
+                str.add(s);
+                map.put(tar,str);
+            }
+            else{
+                map.get(tar).add(s);
+            }
+        }
+        return new ArrayList<List<String>>(map.values());
+    }
