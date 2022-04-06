@@ -1,0 +1,100 @@
+package 力扣.LY_03_哈希表.求数组交集;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
+public class Solution {
+    public static void main(String[] args) {
+        int[] nums1 = {4,9,5};
+        int[] nums2 = {9,4,9,8,4};
+        int[]back = intersect(nums1,nums2);
+        for (int i = 0; i < back.length; i++) {
+            System.out.print(back[i]);
+        }
+    }
+    public static int[] intersection(int[] nums1, int[] nums2) {
+        int x1 = nums1.length;
+        int x2 = nums2.length;
+        int len = Math.max(x1,x2);
+        int[]result = new int[1001];
+        List<Integer>list = new ArrayList<>();
+        int count = 0;
+        for (int i = 0; i < x1; i++) {
+            result[nums1[i]]++;
+        }
+        for (int i = 0; i < x2; i++) {
+            int tar = result[nums2[i]];
+            if(tar!=0&&tar!=-1){
+                list.add(nums2[i]);
+                result[nums2[i]]=-1;
+                //表示已经被访问过了
+            }
+        }
+        int size = list.size();
+        int[]back = new int[size];
+        for (int i = 0; i < size; i++) {
+            back[i] = list.get(i);
+        }
+        return back;
+    }
+    public static int[] intersection01(int[] nums1, int[] nums2) {
+        int x1 = nums1.length;
+        int x2 = nums2.length;
+        int[]result = new int[1001];
+        List<Integer>list = new ArrayList<>();
+        for (int i = 0; i < x1; i++) {
+            result[nums1[i]]++;
+        }
+        for (int i = 0; i < x2; i++) {
+            int tar = result[nums2[i]];
+            if(tar==-1){
+                list.add(nums2[i]);
+            }
+            else if(tar>0){
+                list.add(nums2[i]);
+                result[nums2[i]]--;
+            }
+        }
+        int size = list.size();
+        int[]back = new int[size];
+        for (int i = 0; i < size; i++) {
+            back[i] = list.get(i);
+        }
+        return back;
+    }
+    public static int[] intersect(int[] nums1, int[] nums2){
+        //可以先排序
+        List<Integer>list = new ArrayList<>();
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        int x1 = nums1.length;
+        int x2 = nums2.length;
+        int len = Math.min(x1,x2);
+        int i=0;
+        int j = 0;
+        while(i<x1&&j<x2){
+            int tar1 = nums1[i];
+            int tar2 = nums2[j];
+            if(tar1==tar2){
+                list.add(tar1);
+//                System.out.println(tar1);
+                i++;
+                j++;
+            }
+            else if(tar1<tar2){
+                i++;
+            }
+            else{
+                j++;
+            }
+        }
+        int size = list.size();
+        int[]back = new int[size];
+        for (int k = 0; k < size; k++) {
+            back[k] = list.get(k);
+        }
+//        System.out.println(size);
+        return back;
+    }
+}
