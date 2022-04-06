@@ -1,0 +1,52 @@
+public class Solution {
+    public static void main(String[] args) {
+        System.out.println(isHappy(19));
+    }
+    
+    //失败函数
+    public static boolean isHappy01(int n) {
+        //注意一下求各数字相加的方法！
+        //直接stackOverFlow
+        String str = n+"";
+        int len = str.length();
+        int sum=0;
+        if(Math.pow(n,2)<10&&n!=1){
+            return false;
+        }
+        for (int i = 0; i < len; i++) {
+            int num = Integer.parseInt(str.charAt(i)+"");
+            sum+=Math.pow(num,2);
+        }
+        if(sum==1){
+            return true;
+        }
+        else{
+            return isHappy(sum);
+        }
+    }
+    
+    //成功函数
+    public static boolean isHappy(int n){
+        int slow = n;
+        int fast = n;
+        while(true){
+            slow = getSum(slow);
+            fast = getSum(fast);
+            fast = getSum(fast);
+            if(slow==1||fast==1){
+                return true;
+            }
+            if(fast==slow){
+                return false;
+            }
+        }
+    }
+    public static int getSum(int n){
+        int sum = 0;
+        while(n>0){
+            sum+=((n%10)*(n%10));
+            n/=10;
+        }
+        return sum;
+    }
+}
